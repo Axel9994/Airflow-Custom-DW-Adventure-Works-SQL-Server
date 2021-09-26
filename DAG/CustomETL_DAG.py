@@ -90,13 +90,13 @@ on ad.City = te.City and ad.StateProvinceID = te.StateProvinceID
 where cabecera.CustomerID in (select CustomerID from Sales.Customer where StoreID is not null)
     '''
 
-    crear_dim_territorio = MsSqlOperator(sql = territory_query, mssql_conn_id = 'mssql_default')
+    crear_dim_territorio = MsSqlOperator(sql = territory_query, mssql_conn_id = 'mssql_default', task_id = 'crear_dim_territorio')
 
-    crear_dim_tienda = MsSqlOperator(sql = tienda_query, mssql_conn_id = 'mssql_default')
+    crear_dim_tienda = MsSqlOperator(sql = tienda_query, mssql_conn_id = 'mssql_default', task_id= 'crear_dim_tienda')
 
-    crear_dim_vendedor = MsSqlOperator(sql = vendedor_query, mssql_conn_id = 'mssql_default')
+    crear_dim_vendedor = MsSqlOperator(sql = vendedor_query, mssql_conn_id = 'mssql_default', task_id='crear_dim_vendedor')
 
-    crear_fact_ingreso = MsSqlOperator(sql = ingreso_query, mssql_conn_id = 'mssql_default')
+    crear_fact_ingreso = MsSqlOperator(sql = ingreso_query, mssql_conn_id = 'mssql_default', task_id='crear_fact_ingreso')
 
     [crear_dim_territorio, crear_dim_tienda, crear_dim_vendedor] >> crear_fact_ingreso
 
